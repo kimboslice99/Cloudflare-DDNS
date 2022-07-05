@@ -7,7 +7,7 @@ $recordname = "sub.domain.com"
 $ttl = "1" # Must be between 60 and 86400, or 1 for 'automatic'
 
 Try { $CurrentIP=Invoke-RestMethod -Uri "https://ip6.seeip.org" }
-     Catch { No connection!
+     Catch { Write-Host "No connection!"
              Exit }
 $result = Invoke-RestMethod -Uri "https://api.cloudflare.com/client/v4/zones/$ZoneID/dns_records?type=$type&name=$recordname&page=1&per_page=100&order=type&direction=desc&match=all" -Method 'GET' -ContentType "application/json" -Headers @{'Accept'='application/json';'X-Auth-Email'="$email";'X-Auth-Key'="$apikey"} |
            % {$_.result}
