@@ -1,14 +1,18 @@
 # Fill in your CF email, API key, ZoneID & Record details
-$email="Email_Address"
-$apikey="API_KEY"
+$email="Email_Addr"
+$apikey="CF_API_KEY"
 $ZoneID = "Zone_ID"
 $type = "A"
 $recordname = "sub.domain.tld"
 $ttl = "1" # Must be between 60 and 86400, or 1 for 'automatic'
 
-$CurrentIP=Invoke-RestMethod -Uri "https://ipecho.net/plain'"
-$result = Invoke-RestMethod -Uri "https://api.cloudflare.com/client/v4/zones/$ZoneID/dns_records?type=$type&name=$recordname&page=1&per_page=100&order=type&direction=desc&match=all" -Method 'GET' -ContentType "application/json" -Headers @{'Accept'='application/json';'X-Auth-Email'="$email";'X-Auth-Key'="$apikey"} |
-           % {$_.result}
+Try { $CurrentIP=Invoke-RestMethod -Uri "https://ipecho.net/plain" }
+     Catch { No connection!
+	  Exit }
+Try { $result = Invoke-RestMethod -Uri "https://api.cloudflare.com/client/v4/zones/$ZoneID/dns_records?type=$type&name=$recordname&page=1&per_page=100&order=type&direction=desc&match=all" -Method 'GET' -ContentType "application/json" -Headers @{'Accept'='application/json';'X-Auth-Email'="$email";'X-Auth-Key'="$apikey"} |
+               % {$_.result} }
+            Catch { Write-Host "Cannot contact CF for record info" 
+                    Exit }
 $RecordID = ($result).id
 $IP = ($result).content
 $prox = ($result).proxied
