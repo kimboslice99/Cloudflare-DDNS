@@ -4,7 +4,6 @@ $apikey="CF_API_KEY"
 $ZoneID = "Zone_ID"
 $type = "A"
 $recordname = "sub.domain.tld"
-$ttl = "1" # Must be between 60 and 86400, or 1 for 'automatic'
 
 Try { $CurrentIP=Invoke-RestMethod -Uri "https://ipecho.net/plain" }
      Catch { Write-Host "No connection!"
@@ -17,6 +16,7 @@ $RecordID = ($result).id
 $IP = ($result).content
 $prox = ($result).proxied
 $proxied = "$prox".ToLower()  # Cloudflare API outputs "False"/"True" from above iwr but will not accept it in the next iwr
+$ttl = ($result).ttl
 If ($CurrentIP -eq $ip) { Write-Host "IP Same!"
                           Exit }
                     Else { Write-Host "IP Changed! $CurrentIP doesnt equal $ip"}
