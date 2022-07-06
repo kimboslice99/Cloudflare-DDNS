@@ -3,7 +3,7 @@ $email="Email_Address"
 $apikey="API_KEY"
 $ZoneID = "Zone_ID"
 $type = "AAAA"
-$recordname = "sub.domain.com"
+$recordname = "sub.domain.tld"
 
 Try { $CurrentIP=Invoke-RestMethod -Uri "https://ip6.seeip.org" }
      Catch { Write-Host "No connection!"
