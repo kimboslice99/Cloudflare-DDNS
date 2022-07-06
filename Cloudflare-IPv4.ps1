@@ -1,6 +1,6 @@
 # Fill in your CF email, API key, ZoneID & Record details
-$email="Email_Addr"
-$apikey="CF_API_KEY"
+$email="Email_Address"
+$apikey="API_KEY"
 $ZoneID = "Zone_ID"
 $type = "A"
 $recordname = "sub.domain.tld"
